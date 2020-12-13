@@ -35,8 +35,8 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
-    -e <number>        絵文字/顔文字の最大連続数 [default: 4] [default: 4]
-    -p <level>         句読点挿入頻度レベル [min:0, max:3] [default: 0] [default: 0]
+    -e <number>        絵文字/顔文字の最大連続数 [default: 4]
+    -p <level>         句読点挿入頻度レベル [min:0, max:3] [default: 0]
 
 ARGS:
     <name>    おじさんのメール相手
