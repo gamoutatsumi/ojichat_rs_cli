@@ -55,10 +55,24 @@ jobs:
           command: test
           args: --release --all-features
         continue-on-error: ${{ matrix.rust == 'nightly' }}
+  create-release:
+    name: Create Release
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
   publish_crate:
     name: publish_crate
     if: github.event_name == 'push'
-    needs: [test]
+    needs: [test, create-release]
     runs-on: ubuntu-latest
     steps:
       - uses: actions-rs/cargo@v1
