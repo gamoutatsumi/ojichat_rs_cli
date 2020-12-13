@@ -1,5 +1,9 @@
 # ojichat_rs_cli
 
+[![Crates.io](https://img.shields.io/crates/v/ojichat-cli)](https://crates.io/crates/ojichat-cli)
+[![MIT LICENSE](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gamoutatsumi/ojichat_rs_cli/Build%20and%20Publish%20release)](https://github.com/gamoutatsumi/ojichat_rs_cli/actions?query=workflow:%22Build+and+Publish+release%22)
+
 [ojichat_rs](https://github.com/gamoutatsumi/ojichat_rs)のCLI版です。
 
 ## 開発環境
