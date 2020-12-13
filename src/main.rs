@@ -19,12 +19,12 @@ fn main() {
         .author(crate_authors!())
         .about(crate_description!())
         .arg(
-            Arg::from_usage("-e [number] '絵文字/顔文字の最大連続数 [default: 4]'")
+            Arg::from_usage("-e [number] '絵文字/顔文字の最大連続数'")
                 .validator(check_num)
                 .default_value("4"),
         )
         .arg(
-            Arg::from_usage("-p [level] '句読点挿入頻度レベル [min:0, max:3] [default: 0]'")
+            Arg::from_usage("-p [level] '句読点挿入頻度レベル [min:0, max:3]'")
                 .possible_values(&["0", "1", "2", "3"])
                 .hide_possible_values(true)
                 .default_value("0"),
