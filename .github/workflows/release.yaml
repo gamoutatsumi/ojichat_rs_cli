@@ -1,0 +1,20 @@
+name: Build and Publish release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  publish_crate:
+    name: publish_crate
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions-rs/cargo@v1
+        name: publish crate
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+        with:
+          command: publish

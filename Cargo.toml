@@ -1,0 +1,22 @@
+[package]
+name = "ojichat-cli"
+version = "0.1.0"
+authors = ["Tatsumi Gamou <tatsumigamou@yahoo.co.jp>"]
+edition = "2018"
+
+description = 'Ojisan Nanchatte (ojichat) command'
+
+repository = "https://github.com/gamoutatsumi/ojichat_rs_cli"
+
+readme = "README.md"
+
+license = "MIT"
+
+[[bin]]
+name = "ojichat-rs"
+path = "src/main.rs"
+
+[dependencies]
+clap = "2.33.3"
+ojichat = "0.1.0"
+regex = "1.4.2"
