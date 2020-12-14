@@ -34,9 +34,9 @@ fn main() {
     let matches = app.get_matches();
     let target: Option<String>;
 
-    let emoji_num = Some(value_t!(matches.value_of("e"), usize).unwrap_or_default());
+    let emoji_num = matches.value_of("e").map(|o| o.parse().unwrap());
 
-    let punctuation_level = Some(value_t!(matches.value_of("p"), usize).unwrap_or_default());
+    let punctuation_level = matches.value_of("p").map(|o| o.parse().unwrap());
 
     if let Some(o) = matches.value_of("name") {
         target = Some(o.to_string());
