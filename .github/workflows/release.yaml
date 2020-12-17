@@ -24,6 +24,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Cache cargo registy
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registy-${{ hashFiles('**/Cargo.lock') }}
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
       - name: Setup Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -55,6 +70,7 @@ jobs:
           command: test
           args: --release --all-features
         continue-on-error: ${{ matrix.rust == 'nightly' }}
+
   create-release:
     name: Create Release
     needs: [test]
@@ -69,6 +85,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
   publish_crate:
     name: publish_crate
     if: github.event_name == 'push'
