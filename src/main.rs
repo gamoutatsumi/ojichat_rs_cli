@@ -1,9 +1,9 @@
-use clap::*;
-use ojichat::ojichat;
+use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg};
+use ojichat::ojichat::get_message;
 use regex::Regex;
 use std::io::{stdout, BufWriter, Write};
 
-fn check_num(v: String) -> std::result::Result<(), String> {
+fn check_num(v: String) -> Result<(), String> {
     let re = Regex::new(r"\p{N}").unwrap();
     if !re.is_match(&*v) {
         return Err(String::from("絵文字/顔文字の最大連続数が不正です"));
@@ -44,7 +44,7 @@ fn main() {
         target = None;
     };
 
-    let message = ojichat::get_message(target, emoji_num, punctuation_level);
+    let message = get_message(target, emoji_num, punctuation_level);
 
     writeln!(out, "{}", message).unwrap();
 }

@@ -23,7 +23,7 @@ cargo install ojichat-cli
 
 ```bash
 $ ojichat-rs -h
-ojichat-cli 0.1.0
+ojichat-cli 0.1.4
 Tatsumi Gamou
 Ojisan Nanchatte (ojichat) command
 
