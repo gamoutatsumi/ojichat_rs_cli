@@ -90,7 +90,7 @@ jobs:
           - build: windows
             os: ubuntu-latest
             rust: nightly
-            target: x86_64-pc-windows-msvc
+            target: x86_64-pc-windows-gnu
     steps:
       - uses: actions/checkout@v2
       - name: Cache cargo registy
