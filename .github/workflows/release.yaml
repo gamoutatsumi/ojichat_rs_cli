@@ -94,19 +94,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Cache cargo registy
-        if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions/cache@v1
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registy-${{ hashFiles('**/Cargo.lock') }}
       - name: Cache cargo index
-        if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions/cache@v1
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
       - name: Cache cargo build
-        if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions/cache@v1
         with:
           path: target
@@ -123,7 +120,6 @@ jobs:
         with:
           command: build
           args: --verbose --release --target ${{ matrix.target }}
-          use-cross: true
       - name: Strip release binary (linux and macos)
         if: matrix.build == 'linux' || matrix.build == 'macos'
         run: strip "target/${{ matrix.target }}/release/ojichat-rs"
