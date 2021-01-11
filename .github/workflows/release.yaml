@@ -50,7 +50,6 @@ jobs:
           profile: default
           toolchain: ${{ matrix.rust }}
           override: true
-          target: ${{ matrix.target }}
       - uses: actions-rs/cargo@v1
         name: show rustfmt version
         with:
@@ -125,6 +124,7 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
+          target: ${{ matrix.target }}
       - name: Build release binary
         uses: actions-rs/cargo@v1
         with:
