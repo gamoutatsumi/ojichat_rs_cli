@@ -112,6 +112,7 @@ jobs:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
       - name: Set up Docker Buildx
+        if: matrix.build == 'linux'
         uses: docker/setup-buildx-action@v1
       - name: Docker build
         run: docker buildx build . -t gha-rust-musl-builder
