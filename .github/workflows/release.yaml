@@ -94,20 +94,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Cache cargo registy
+        if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions/cache@v1
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registy-${{ hashFiles('**/Cargo.lock') }}
       - name: Cache cargo index
+        if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions/cache@v1
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
       - name: Cache cargo build
+        if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions/cache@v1
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Docker build
+        run: docker buildx build . -t gha-rust-musl-builder
       - name: Setup Rust
         if: matrix.build == 'macos' || matrix.build == 'windows'
         uses: actions-rs/toolchain@v1
@@ -125,7 +132,7 @@ jobs:
           use-cross: true
       - name: Build relese binary (Ubuntu)
         if: matrix.build == 'linux'
-        run: docker run --rm -v $(pwd):/home/rust/src ekidd/rust-musl-builder:latest cargo build --release --target ${{ matrix.target }}
+        run: docker run --rm -v $(pwd):/home/rust/src gha-rust-musl-builder:latest
       - name: Strip release binary (linux and macos)
         if: matrix.build == 'linux' || matrix.build == 'macos'
         run: strip "target/${{ matrix.target }}/release/ojichat-rs"
