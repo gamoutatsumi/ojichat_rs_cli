@@ -45,6 +45,7 @@ jobs:
           profile: default
           toolchain: ${{ matrix.rust }}
           override: true
+          target: ${{ martix.target }}
       - uses: actions-rs/cargo@v1
         name: show rustfmt version
         with:
