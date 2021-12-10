@@ -5,80 +5,10 @@ on:
   push:
     tags:
       - "v*.*.*"
-  pull_request:
-    branches:
-      - master
 
 jobs:
-  test:
-    name: Rust ${{ matrix.os }} ${{ matrix.rust }}
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        rust:
-          - stable
-          - beta
-          - nightly
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install GNU tar
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install gnu-tar
-          echo PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" >> $GITHUB_ENV
-      - name: Cache cargo registy
-        uses: actions/cache@v2
-        with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registy-${{ hashFiles('**/Cargo.lock') }}
-      - name: Cache cargo index
-        uses: actions/cache@v2
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-${{ matrix.rust }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-      - name: Cache cargo test
-        uses: actions/cache@v2
-        with:
-          path: target
-          key: ${{ runner.os }}-${{ matrix.rust }}-cargo-test-target-${{ hashFiles('**/Cargo.toml') }}
-      - name: Setup Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: default
-          toolchain: ${{ matrix.rust }}
-          override: true
-      - uses: actions-rs/cargo@v1
-        name: show rustfmt version
-        with:
-          command: fmt
-          args: --version
-      - uses: actions-rs/cargo@v1
-        name: run rustfmt check
-        with:
-          command: fmt
-          args: --all -- --check
-      - uses: actions-rs/cargo@v1
-        name: show clippy version
-        with:
-          command: clippy
-          args: --version
-      - uses: actions-rs/cargo@v1
-        name: run clippy check
-        with:
-          command: clippy
-      - name: Run tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --release --all-features
-        continue-on-error: ${{ matrix.rust == 'nightly' }}
-
   build-release:
     name: Build Release
-    needs: [test]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
