@@ -17,7 +17,7 @@ name = "ojichat-rs"
 path = "src/main.rs"
 
 [dependencies]
-clap = { version = "2.33.3", default-features = false }
+clap = { version = "3.1.18", default-features = false }
 ojichat = "0.1.0"
 regex = "1.4.2"
 
